@@ -6,9 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.*;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
 @Entity
@@ -24,14 +25,17 @@ public class Room {
     private BigDecimal roomPrice;
     private boolean isBooked = false;
 
+    @Lob
+    private Blob photo;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BookedRoom> bookings;
+    private List<Booking> bookings;
 
     public Room() {
         this.bookings = new ArrayList<>();
     }
 
-    public void addBooking(BookedRoom booking) {
+    public void addBooking(Booking booking) {
         if(isBooked) {
             return;
         }
